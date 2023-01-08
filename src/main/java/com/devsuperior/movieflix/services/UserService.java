@@ -34,7 +34,12 @@ public class UserService implements UserDetailsService {
 		User entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
 		return new UserDTO(entity);
 	}
-	
+
+	@Transactional(readOnly = true)
+	public UserDTO profile(){
+		User user = authService.authenticated();
+		return new UserDTO(user);
+	}
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
